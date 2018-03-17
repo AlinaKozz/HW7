@@ -1,35 +1,42 @@
-def push(stack, n):
-    global stack_list
-    stack_list = stack[:] + [n]
-    return stack_list
 
 
-def pop(stack_list):
-    last_num = stack_list[-1]
-    stack = stack_list[:-1]
-    print(last_num)
-    return stack
+class Stack:
 
+    def __init__(self, *args):
+        self.body = list(args)
+        self.permitted_count = 100
 
-def size(stack):
-    return len(stack_list) - 1
+    def push(self, new_item):
+        if len(self.body) < self.permitted_count:
+            self.body = self.body + [new_item]
+            return self.body
 
+    def pop(self):
+        last_num = self.body[-1]
+        self.body = self.body[:-1]
+        return last_num
 
-def back(stack_list):
-    return stack_list[-1]
+    def size(self):
+        return len(self.body)
 
+    def back(self):
+        return self.body[-1]
 
-def clear(stack_list, answer):
-    if answer == 'y':
-        stack_list = []
-        return stack_list
+    def clear(self, answer):
+        if answer == 'y':
+            self.body = []
+            return self.body
+
+    def show(self):
+        print(self.body)
 
 
 def exit():
     print("Bye")
 
 command = ""
-stack_list = []
+
+stack = Stack()
 
 if __name__ == '__main__':
 
@@ -38,18 +45,21 @@ if __name__ == '__main__':
         command = input("Enter the command: ")
         if command == 'push':
             input_number = input("Enter a number: ")
-            push(stack=stack_list, n=input_number)
+            stack.push(input_number)
             print("Ok")
         elif command == 'pop':
-            stack_list = pop(stack_list)
+            last_num = stack.pop()
+            print(last_num)
+        elif command == 'show':
+            stack.show()
         elif command == 'size':
-            stack_len = size(stack=stack_list)
+            stack_len = stack.size()
             print(stack_len)
         elif command == 'back':
-            print(stack_list[-1])
+            print(stack.body[-1])
         elif command == 'clear':
             input_answer = input("Clear the list, yes or no [y/n]? ")
-            stack_list = []
+            stack.clear(input_answer)
             print("Ok")
         else:
             print("Bye")
